@@ -12,15 +12,21 @@ import { useToken } from "../hooks/useToken";
 interface TokenPriceWidgetProps {
   tokenAddress: string;
   chainId: number;
+  refreshInterval?: number;
 }
 
 const TokenPriceWidget: React.FC<TokenPriceWidgetProps> = ({
   tokenAddress,
   chainId,
+  refreshInterval = 60000, // default 60 seconds polling
 }) => {
   const themeVariables = useMemo(() => constructThemeVariables(), []);
 
-  const { token, loading, error } = useToken(chainId, tokenAddress);
+  const { token, loading, error } = useToken(
+    chainId,
+    tokenAddress,
+    refreshInterval
+  );
 
   return (
     <div

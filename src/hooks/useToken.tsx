@@ -16,7 +16,11 @@ import { getPlatformName } from "../utils/getPlatformName";
  * - Handles CoinGecko rate limit, not found, and general HTTP errors
  * - Maps API response to a simplified `TokenInfo` shape
  */
-export function useToken(chainId: number, contractAddress: string) {
+export function useToken(
+  chainId: number,
+  contractAddress: string,
+  refreshInterval: number
+) {
   const [token, setToken] = useState<Token | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -34,8 +38,10 @@ export function useToken(chainId: number, contractAddress: string) {
     let isMounted = true;
     const controller = new AbortController();
 
-    const fetchData = async () => {
-      setLoading(true);
+    const fetchData = async (isInitialLoad = false) => {
+      if (isInitialLoad) {
+        setLoading(true);
+      }
       setError(null);
 
       try {
@@ -81,13 +87,23 @@ export function useToken(chainId: number, contractAddress: string) {
       }
     };
 
-    fetchData();
+    // First fetch as "loading"
+    fetchData(true);
+
+    // Set up polling with interval if refreshInterval > 0
+    let timer: number | undefined;
+    if (refreshInterval > 0) {
+      timer = window.setInterval(() => fetchData(false), refreshInterval);
+    }
 
     return () => {
       isMounted = false;
       controller.abort(); // cancel any in-flight requests
+      if (timer) {
+        clearInterval(timer);
+      }
     };
-  }, [chainId, contractAddress]);
+  }, [chainId, contractAddress, refreshInterval]);
 
   return { token, loading, error };
 }
