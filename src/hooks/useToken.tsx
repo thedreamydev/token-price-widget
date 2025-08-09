@@ -26,7 +26,11 @@ export function useToken(
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!chainId || !contractAddress) return;
+    if (!chainId || !contractAddress) {
+      setLoading(false);
+      setError("Chain id or token address cannot be empty.");
+      return;
+    }
 
     const platform = getPlatformName(chainId);
     if (!platform) {

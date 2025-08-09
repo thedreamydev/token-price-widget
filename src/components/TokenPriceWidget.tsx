@@ -9,7 +9,7 @@ import { constructThemeVariables } from "../utils/constructThemeVariables";
 
 import { useToken } from "../hooks/useToken";
 
-interface TokenPriceWidgetProps {
+export interface TokenPriceWidgetProps {
   tokenAddress: string;
   chainId: number;
   refreshInterval?: number;
@@ -34,9 +34,10 @@ const TokenPriceWidget: React.FC<TokenPriceWidgetProps> = ({
       role="region"
       aria-label="Token Price Widget"
       className={cn(
-        "px-5 py-4 shadow-md min-w-56",
+        "px-5 py-4 min-w-56",
         "bg-[var(--background-color)] [font-family:var(--font-family)] text-[var(--text-color)]",
-        "border border-[var(--border-color)] rounded-[var(--border-radius)]"
+        "[border:1px_solid_var(--border-color)] rounded-[var(--border-radius)]",
+        "[box-shadow:0_4px_6px_-1px_rgb(0_0_0_/_0.1),0_2px_4px_-2px_rgb(0_0_0_/_0.1)]"
       )}
     >
       {loading && <TokenSkeleton />}
