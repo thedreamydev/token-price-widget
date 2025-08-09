@@ -12,17 +12,33 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
         min-height: 100vh;
       }
     </style>
   </head>
   <body>
     <div>
+      <h2>Default</h2>
       <token-price-widget
         chain-id="1"
         token-address="0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9"
       ></token-price-widget>
     </div>
-    <script src="./dist/token-price-widget.iife.js" defer></script>
+
+    <div>
+      <h2>Custom Refresh Interval (30ms)</h2>
+      <token-price-widget
+        chain-id="1"
+        token-address="0xb8c77482e45f1f44de1745f52c74426c631bdd52"
+        refresh-interval="30000"
+      ></token-price-widget>
+    </div>
+
+    <script
+      src="https://thedreamydev.github.io/token-price-widget/token-price-widget.iife.js"
+      defer
+    ></script>
   </body>
 </html>
