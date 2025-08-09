@@ -1,0 +1,48 @@
+name: Deploy to GitHub Pages
+
+# Trigger workflow on push to main branch and manual runs
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# Grant necessary permissions for GitHub Pages deployment
+permissions:
+  contents: read # to fetch repo content
+  pages: write # to publish to GitHub Pages
+  id-token: write # for GitHub environments (optional)
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+      # Checkout the repository to the runner
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Setup Node.js environment with a specified version (adjust if needed)
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Build the project to generate the 'dist' folder (output directory)
+      - name: Build project
+        run: npm run build:lib
+
+      # Deploy generated 'dist' folder to GitHub Pages using peaceiris action
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
