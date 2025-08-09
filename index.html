@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Token Price Widget Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      body {
+        font-family: sans-serif;
+        background-color: #f9fafb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <token-price-widget
+        chain-id="1"
+        token-address="0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9"
+      ></token-price-widget>
+    </div>
+    <script src="./dist/token-price-widget.iife.js" defer></script>
+  </body>
+</html>
