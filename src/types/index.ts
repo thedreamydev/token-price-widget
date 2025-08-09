@@ -1,4 +1,4 @@
-export interface TokenInfo {
+export interface Token {
   name: string;
   symbol: string;
   image: string | null;
