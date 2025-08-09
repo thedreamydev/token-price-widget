@@ -9,7 +9,7 @@ on:
 
 # Grant necessary permissions for GitHub Pages deployment
 permissions:
-  contents: read # to fetch repo content
+  contents: write # to fetch repo content
   pages: write # to publish to GitHub Pages
   id-token: write # for GitHub environments (optional)
 
